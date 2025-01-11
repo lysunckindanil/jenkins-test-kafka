@@ -1,24 +1,30 @@
 package org.example.producer.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.producer.dto.Dummy;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 public class ProduceController {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Dummy> kafkaTemplate;
 
-    @GetMapping("/1")
-    public String produce1() {
-        kafkaTemplate.send("topic1", "Hello World from topic 1");
-        return "Produced topic 1";
-    }
-
-    @GetMapping("/2")
-    public String produce2() {
-        kafkaTemplate.send("topic2", "Hello World from topic 2");
-        return "Produced topic 2";
+    @GetMapping("/{topic}/{times}")
+    public String produce1(@PathVariable String topic, @PathVariable int times, Model model) {
+        List<Dummy> dummyList = new ArrayList<>();
+        for (int i = 0; i < times; i++) {
+            Dummy dummy = Dummy.builder().topic(topic).times(i).build();
+            dummyList.add(dummy);
+            kafkaTemplate.send(topic, dummy);
+        }
+        model.addAttribute("dummyList", dummyList);
+        return "response";
     }
 }

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Response</title>
+</head>
+<body>
+<div th:each="dummy : ${dummyList}">
+    <p th:text="${dummy.toString()}"></p>
+</div>
+</body>
+</html>
