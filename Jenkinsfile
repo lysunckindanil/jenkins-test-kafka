@@ -16,7 +16,7 @@ pipeline {
     stage('Stage Start Docker Containers') {
       steps {
         sh 'docker-compose down'
-        sh 'docker-compose ip --build'
+        sh 'docker-compose up -d --build'
       }
     }
   }
