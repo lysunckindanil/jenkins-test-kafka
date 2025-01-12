@@ -6,5 +6,11 @@ pipeline {
         sh 'mvn test -Pprod'
       }
     }
+
+    stage('Stage Build Image') {
+      steps {
+        sh 'mvn spring-boot:build-image -Pprod'
+      }
+    }
   }
 }
