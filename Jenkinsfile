@@ -3,13 +3,20 @@ pipeline {
   stages {
     stage('Stage Test') {
       steps {
-        sh 'mvn test -Pprod'
+        sh 'mvn clean test -Pprod'
       }
     }
 
-    stage('Stage Build Image') {
+    stage('Stage Build Images') {
       steps {
         sh 'mvn spring-boot:build-image -Pprod'
+      }
+    }
+
+    stage('Stage Start Docker Containers') {
+      steps {
+        sh 'docker-compose down'
+        sh 'docker-compose ip --build'
       }
     }
   }
