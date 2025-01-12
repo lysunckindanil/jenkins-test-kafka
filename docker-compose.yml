@@ -30,7 +30,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - "8002:8080"
+      - "8000:8080"
 
   consumer:
     image: docker.io/library/consumer:0.0.1-SNAPSHOT
