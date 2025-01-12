@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Stage 1') {
+    stage('Stage Test') {
       steps {
-        sh 'ls -la'
+        sh 'mvn test -Pprod'
       }
     }
   }
